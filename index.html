@@ -80,6 +80,13 @@
     object-fit: cover;
     display: block;
   }
+  .frame-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
   .hero-overlay {
     position: absolute;
     inset: 0;
@@ -577,8 +584,8 @@
   }
   .info-point-1 { top: 8%; left: 22%; }
   .info-point-2 { top: 8%; right: 22%; }
-  .info-point-3 { bottom: 8%; left: 22%; }
-  .info-point-4 { bottom: 8%; right: 22%; }
+  .info-point-3 { bottom: 16%; left: 22%; }
+  .info-point-4 { bottom: 16%; right: 22%; }
 
   /* ─── SECTION 5: TESTIMONIALS ─── */
   #testimonials {
@@ -761,9 +768,7 @@
 <!-- SECTION 1: HERO -->
 <section id="hero">
   <div class="hero-sticky video-fade">
-    <video id="hero-video" muted playsinline preload="auto">
-      <source src="videos/opt_Shot1A.mp4" type="video/mp4">
-    </video>
+    <canvas id="hero-canvas" class="frame-canvas"></canvas>
     <div class="hero-overlay"></div>
     <div class="hero-text" id="hero-text">
       <div class="hero-eyebrow">Seit 5000 Jahren. Heute mehr denn je.</div>
@@ -787,9 +792,7 @@
     <div class="why-gold-video">
       <div class="wgv-fade-left"></div>
       <div class="wgv-fade-right"></div>
-      <video autoplay muted loop playsinline>
-        <source src="videos/opt_Shot1B.mp4" type="video/mp4">
-      </video>
+<canvas id="shot1b-canvas" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"></canvas>
     </div>
   </div>
   <div class="cards-grid" id="cards-grid">
@@ -829,9 +832,7 @@
 <!-- SECTION 3: SPLIT SCREEN -->
 <section id="split-screen">
   <div class="split-left">
-    <video id="smelt-video" muted playsinline preload="auto">
-      <source src="videos/opt_Shot3.mp4" type="video/mp4">
-    </video>
+    <canvas id="smelt-canvas" class="frame-canvas"></canvas>
     <div class="split-left-overlay"></div>
   </div>
   <div class="split-right" id="split-right">
@@ -893,12 +894,8 @@
 <section id="gold-bar-section">
   <div class="gold-bar-sticky video-fade">
     <div class="gold-video-container">
-      <video id="gold-video-a" muted playsinline preload="auto">
-        <source src="videos/opt_4A-haende-kommen.mp4" type="video/mp4">
-      </video>
-      <video id="gold-video-b" muted playsinline preload="auto">
-        <source src="videos/opt_4B-saeule-steigt.mp4" type="video/mp4">
-      </video>
+      <canvas id="gold-canvas-a" class="frame-canvas"></canvas>
+      <canvas id="gold-canvas-b" class="frame-canvas" style="opacity:0;transition:opacity 0.4s;"></canvas>
     </div>
     <div class="gold-info-points">
       <div class="info-point info-point-1" id="info-1">
@@ -971,9 +968,7 @@
 <!-- SECTION 6: FINALE -->
 <section id="finale">
   <div class="finale-sticky video-fade">
-    <video id="vault-video" muted playsinline preload="auto">
-      <source src="videos/opt_Shot2A.mp4" type="video/mp4">
-    </video>
+    <canvas id="vault-canvas" class="frame-canvas"></canvas>
     <div class="finale-overlay" id="finale-overlay">
       <h2 class="finale-title">Ihr Gold.<br><em>Sicher verwahrt.</em><br>Für immer.</h2>
       <p class="finale-sub">Starten Sie heute mit Ihrer ersten Gold-Position. Bereits ab 5.000 € — zertifiziert, versichert, und jederzeit zugänglich.</p>
@@ -995,6 +990,102 @@
 
 <!-- THREE.JS -->
 <script>
+// ─── FRAME SEQUENCE ENGINE ───
+class FrameSequence {
+  constructor(canvas, folder, frameCount, padded) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.folder = folder;
+    this.frameCount = frameCount;
+    this.frames = [];
+    this.loaded = 0;
+    this.currentFrame = 0;
+    this.ready = false;
+    this.resize();
+    window.addEventListener('resize', () => this.resize());
+  }
+
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+    if (this.frames[this.currentFrame]) this.draw(this.currentFrame);
+  }
+
+  load(priority) {
+    // Load first frame immediately, rest progressively
+    const load = (i) => {
+      const img = new Image();
+      const num = String(i + 1).padStart(4, '0');
+      img.src = `frames/${this.folder}/frame${num}.jpg`;
+      img.onload = () => {
+        this.frames[i] = img;
+        this.loaded++;
+        if (i === 0) { this.draw(0); this.ready = true; }
+        if (this.loaded === this.frameCount) console.log(`${this.folder} ready`);
+      };
+    };
+    // Load frame 0 first, then rest
+    load(0);
+    for (let i = 1; i < this.frameCount; i++) {
+      setTimeout(() => load(i), priority ? i * 8 : i * 20);
+    }
+  }
+
+  draw(frameIndex) {
+    const img = this.frames[frameIndex];
+    if (!img) return;
+    const c = this.canvas;
+    const iw = img.width, ih = img.height;
+    const cw = c.width, ch = c.height;
+    const scale = Math.max(cw / iw, ch / ih);
+    const x = (cw - iw * scale) / 2;
+    const y = (ch - ih * scale) / 2;
+    this.ctx.clearRect(0, 0, cw, ch);
+    this.ctx.drawImage(img, x, y, iw * scale, ih * scale);
+    this.currentFrame = frameIndex;
+  }
+
+  setProgress(p) {
+    const idx = Math.min(Math.floor(p * this.frameCount), this.frameCount - 1);
+    if (idx !== this.currentFrame) this.draw(idx);
+  }
+}
+
+// ─── INIT SEQUENCES ───
+const heroSeq    = new FrameSequence(document.getElementById('hero-canvas'),   'Shot1A', 126);
+const smeltSeq   = new FrameSequence(document.getElementById('smelt-canvas'),  'Shot3',  126);
+const goldSeqA   = new FrameSequence(document.getElementById('gold-canvas-a'), '4A',     126);
+const goldSeqB   = new FrameSequence(document.getElementById('gold-canvas-b'), '4B',     126);
+const vaultSeq   = new FrameSequence(document.getElementById('vault-canvas'),  'Shot2A', 126);
+const shot1bSeq  = new FrameSequence(document.getElementById('shot1b-canvas'), 'Shot1B', 126);
+
+// Shot1B canvas needs different sizing (in why-gold section)
+const shot1bCanvas = document.getElementById('shot1b-canvas');
+shot1bCanvas.width = 420;
+shot1bCanvas.height = 280;
+const shot1bCtx = shot1bCanvas.getContext('2d');
+
+// Load all — hero first (priority), others deferred
+heroSeq.load(true);
+setTimeout(() => smeltSeq.load(false), 500);
+setTimeout(() => goldSeqA.load(false), 800);
+setTimeout(() => goldSeqB.load(false), 1100);
+setTimeout(() => vaultSeq.load(false), 1400);
+setTimeout(() => shot1bSeq.load(false), 200);
+
+// Shot1B loop animation
+let shot1bFrame = 0;
+setInterval(() => {
+  if (shot1bSeq.frames[shot1bFrame]) {
+    const img = shot1bSeq.frames[shot1bFrame];
+    shot1bCanvas.width = shot1bCanvas.offsetWidth;
+    shot1bCanvas.height = shot1bCanvas.offsetHeight;
+    const s = Math.max(shot1bCanvas.width/img.width, shot1bCanvas.height/img.height);
+    shot1bCtx.drawImage(img, (shot1bCanvas.width-img.width*s)/2, (shot1bCanvas.height-img.height*s)/2, img.width*s, img.height*s);
+  }
+  shot1bFrame = (shot1bFrame + 1) % shot1bSeq.frameCount;
+}, 40);
+
 // ─── HERO TEXT REVEAL ───
 setTimeout(() => {
   document.getElementById('hero-text').classList.add('visible');
@@ -1008,23 +1099,15 @@ function getScrollProgress(el) {
   return Math.max(0, Math.min(1, scrolled / total));
 }
 
-// ─── HERO VIDEO SCRUB ───
-const heroVideo = document.getElementById('hero-video');
-const heroSection = document.getElementById('hero');
-heroVideo.addEventListener('loadedmetadata', () => {
-  heroVideo.pause();
-});
-
-// ─── SMELT VIDEO SCRUB ───
-const smeltVideo = document.getElementById('smelt-video');
-smeltVideo.addEventListener('loadedmetadata', () => { smeltVideo.pause(); });
-
-// ─── SPLIT SCREEN ACTIVATION ───
+// ─── SPLIT SCREEN ITEMS ───
 const splitItems = document.querySelectorAll('[data-split-item]');
 
-// ─── VAULT VIDEO ───
-const vaultVideo = document.getElementById('vault-video');
-vaultVideo.addEventListener('loadedmetadata', () => { vaultVideo.pause(); });
+// ─── GOLD BAR INFO POINTS ───
+const infoPoints = document.querySelectorAll('.info-point');
+
+// ─── GOLD CANVASES ───
+const goldCanvasA = document.getElementById('gold-canvas-a');
+const goldCanvasB = document.getElementById('gold-canvas-b');
 
 // ─── CURSOR CARDS ───
 const cards = document.querySelectorAll('[data-card]');
@@ -1035,116 +1118,70 @@ cards.forEach(card => {
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     card.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(8px)`;
   });
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; });
 });
 
 // ─── TESTIMONIALS DRAG ───
 const track = document.getElementById('testimonials-track');
 let isDragging = false, startX, scrollLeft;
-track.addEventListener('mousedown', e => {
-  isDragging = true;
-  track.classList.add('grabbing');
-  startX = e.pageX - track.offsetLeft;
-  scrollLeft = track.scrollLeft;
-});
+track.addEventListener('mousedown', e => { isDragging = true; track.classList.add('grabbing'); startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; });
 track.addEventListener('mouseleave', () => { isDragging = false; track.classList.remove('grabbing'); });
 track.addEventListener('mouseup', () => { isDragging = false; track.classList.remove('grabbing'); });
-track.addEventListener('mousemove', e => {
-  if (!isDragging) return;
-  e.preventDefault();
-  const x = e.pageX - track.offsetLeft;
-  track.scrollLeft = scrollLeft - (x - startX) * 1.5;
-});
-
-// ─── SECTION 4: VIDEO SCRUB ───
-const goldSection = document.getElementById('gold-bar-section');
-const infoPoints = document.querySelectorAll('.info-point');
-const goldVideoA = document.getElementById('gold-video-a');
-const goldVideoB = document.getElementById('gold-video-b');
-
-[goldVideoA, goldVideoB].forEach(v => {
-  v.addEventListener('loadedmetadata', () => { v.pause(); });
-});
-
-function updateGoldVideos(progress) {
-  if (progress < 0.45) {
-    // Phase 1: Video A — Hände kommen
-    const p = progress / 0.45;
-    if (goldVideoA.duration) goldVideoA.currentTime = p * goldVideoA.duration;
-    goldVideoA.style.opacity = '1';
-    goldVideoB.style.opacity = '0';
-    infoPoints.forEach(pt => pt.classList.remove('visible'));
-  } else if (progress < 0.5) {
-    // Crossfade
-    const p = (progress - 0.45) / 0.05;
-    goldVideoA.style.opacity = String(1 - p);
-    goldVideoB.style.opacity = String(p);
-    if (goldVideoB.duration) goldVideoB.currentTime = 0;
-    infoPoints.forEach(pt => pt.classList.remove('visible'));
-  } else if (progress < 0.85) {
-    // Phase 2: Video B — Säule + Ablegen + Hände gehen
-    const p = (progress - 0.5) / 0.35;
-    if (goldVideoB.duration) goldVideoB.currentTime = p * goldVideoB.duration;
-    goldVideoA.style.opacity = '0';
-    goldVideoB.style.opacity = '1';
-    // Info points erscheinen ab 65% des Gesamtscrolls
-    infoPoints.forEach((pt, i) => {
-      if (p > 0.5 + i * 0.12) pt.classList.add('visible');
-      else pt.classList.remove('visible');
-    });
-  } else {
-    // Phase 3: Goldbarren steht — alle Punkte sichtbar
-    goldVideoA.style.opacity = '0';
-    goldVideoB.style.opacity = '1';
-    if (goldVideoB.duration) goldVideoB.currentTime = goldVideoB.duration;
-    infoPoints.forEach(pt => pt.classList.add('visible'));
-  }
-}
+track.addEventListener('mousemove', e => { if (!isDragging) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX) * 1.5; });
 
 // ─── MAIN SCROLL HANDLER ───
+const heroSection    = document.getElementById('hero');
+const splitSection   = document.getElementById('split-screen');
+const goldSection    = document.getElementById('gold-bar-section');
+const finaleSection  = document.getElementById('finale');
+
 window.addEventListener('scroll', () => {
-  // Hero video scrub
-  if (heroVideo.duration) {
-    const p = getScrollProgress(heroSection);
-    heroVideo.currentTime = p * heroVideo.duration;
-  }
+  // Hero frames
+  heroSeq.setProgress(getScrollProgress(heroSection));
 
-  // Smelt video scrub
-  const splitSection = document.getElementById('split-screen');
-  if (smeltVideo.duration) {
-    const p = getScrollProgress(splitSection);
-    smeltVideo.currentTime = p * smeltVideo.duration;
-  }
-
-  // Split text items
+  // Smelt frames + split text
   const splitP = getScrollProgress(splitSection);
-  const rawIndex = splitP * splitItems.length;
-  const itemIndex = Math.min(Math.floor(rawIndex), splitItems.length - 1);
+  smeltSeq.setProgress(splitP);
+  const itemIndex = Math.min(Math.floor(splitP * splitItems.length), splitItems.length - 1);
   splitItems.forEach((item, i) => {
     if (i === itemIndex) item.classList.add('active');
     else item.classList.remove('active');
   });
 
-  // Gold videos
+  // Gold bar videos
   const goldP = getScrollProgress(goldSection);
-  updateGoldVideos(goldP);
-
-  // Vault video + finale overlay
-  const finaleSection = document.getElementById('finale');
-  const finaleP = getScrollProgress(finaleSection);
-  if (vaultVideo.duration) {
-    vaultVideo.currentTime = finaleP * vaultVideo.duration * 0.7;
-  }
-  if (finaleP > 0.6) {
-    document.getElementById('finale-overlay').classList.add('visible');
+  if (goldP < 0.45) {
+    goldSeqA.setProgress(goldP / 0.45);
+    goldCanvasA.style.opacity = '1';
+    goldCanvasB.style.opacity = '0';
+    infoPoints.forEach(pt => pt.classList.remove('visible'));
+  } else if (goldP < 0.5) {
+    const p = (goldP - 0.45) / 0.05;
+    goldCanvasA.style.opacity = String(1 - p);
+    goldCanvasB.style.opacity = String(p);
+    infoPoints.forEach(pt => pt.classList.remove('visible'));
+  } else if (goldP < 0.85) {
+    const p = (goldP - 0.5) / 0.35;
+    goldSeqB.setProgress(p);
+    goldCanvasA.style.opacity = '0';
+    goldCanvasB.style.opacity = '1';
+    infoPoints.forEach((pt, i) => {
+      if (p > 0.5 + i * 0.12) pt.classList.add('visible');
+      else pt.classList.remove('visible');
+    });
   } else {
-    document.getElementById('finale-overlay').classList.remove('visible');
+    goldSeqB.setProgress(1);
+    goldCanvasA.style.opacity = '0';
+    goldCanvasB.style.opacity = '1';
+    infoPoints.forEach(pt => pt.classList.add('visible'));
   }
-});
 
+  // Vault frames + finale overlay
+  const finaleP = getScrollProgress(finaleSection);
+  vaultSeq.setProgress(finaleP * 0.7);
+  if (finaleP > 0.6) document.getElementById('finale-overlay').classList.add('visible');
+  else document.getElementById('finale-overlay').classList.remove('visible');
+});
 
 </script>
 </body>
-</html>
