@@ -487,13 +487,15 @@
 
   /* ─── SECTION 3B: INVESTMENTPROZESS ─── */
   #prozess {
-    padding: 140px 60px;
+    padding: 120px 0 80px;
     position: relative;
     z-index: 1;
+    overflow: hidden;
   }
   .prozess-header {
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 70px;
+    padding: 0 60px;
   }
   .prozess-header .section-title {
     max-width: 600px;
@@ -504,59 +506,140 @@
     margin: 0 auto;
     text-align: center;
   }
-  .prozess-steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
+
+  /* Timeline */
+  .prozess-timeline-wrap {
     position: relative;
-    max-width: 1100px;
-    margin: 0 auto;
+    padding: 0 60px;
+    margin-bottom: 0;
   }
-  .prozess-steps::before {
-    content: '';
+  .prozess-timeline-line {
     position: absolute;
-    top: 36px;
-    left: 16%;
-    right: 16%;
+    top: 20px;
+    left: 60px;
+    right: 60px;
     height: 1px;
-    background: linear-gradient(to right, transparent, var(--gold-dark), var(--gold-dark), transparent);
+    background: linear-gradient(to right, transparent, var(--gold-dark) 10%, var(--gold-dark) 90%, transparent);
   }
-  .prozess-step {
+  .prozess-timeline-dots {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .prozess-dot-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    padding: 0 40px;
+    gap: 10px;
+    flex: 1;
   }
-  .prozess-step-number {
-    width: 72px;
-    height: 72px;
+  .prozess-dot {
+    width: 40px;
+    height: 40px;
     border: 1px solid var(--gold-dark);
     border-radius: 50%;
+    background: var(--navy);
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
-    font-weight: 300;
+    font-size: 18px;
     color: var(--gold-light);
-    margin-bottom: 28px;
     position: relative;
     z-index: 1;
-    background: var(--navy);
   }
-  .prozess-step-title {
+  .prozess-dot-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    text-align: center;
+  }
+
+  /* Scroll cards */
+  .prozess-cards-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding: 0 60px 40px;
+    scrollbar-width: none;
+    cursor: grab;
+    scroll-snap-type: x mandatory;
+  }
+  .prozess-cards-track::-webkit-scrollbar { display: none; }
+  .prozess-cards-track.grabbing { cursor: grabbing; }
+  .prozess-card {
+    flex-shrink: 0;
+    width: 340px;
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.12);
+    padding: 36px;
+    scroll-snap-align: start;
+    transition: border-color 0.3s;
+  }
+  .prozess-card:hover { border-color: rgba(201,168,76,0.3); }
+  .prozess-card-step {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 20px;
+  }
+  .prozess-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 24px;
+    background: rgba(201,168,76,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .prozess-card-img-icon {
+    font-size: 48px;
+    opacity: 0.3;
+  }
+  .prozess-card-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 400;
     color: var(--white);
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
-  .prozess-step-text {
-    font-size: 14px;
+  .prozess-card-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .prozess-tag {
+    font-size: 11px;
+    border: 1px solid rgba(201,168,76,0.25);
+    color: var(--gray);
+    padding: 4px 10px;
+    letter-spacing: 0.04em;
+  }
+  .prozess-card-text {
+    font-size: 13px;
     font-weight: 300;
     color: var(--gray);
     line-height: 1.7;
+  }
+  .prozess-card-highlight {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+    line-height: 1;
+  }
+
+  /* CTA */
+  .prozess-cta {
+    text-align: center;
+    padding: 20px 60px 0;
   }
 
   /* ─── SECTION 4: GOLDBARREN VIDEO ─── */
@@ -1069,25 +1152,164 @@
 <section id="prozess">
   <div class="prozess-header">
     <div class="section-eyebrow">So funktioniert es</div>
-    <h2 class="section-title">In drei Schritten zu Ihrem Gold</h2>
-    <p class="section-sub">Einfach. Sicher. Transparent. Von der ersten Anfrage bis zum eingelagerten Barren.</p>
+    <h2 class="section-title">In vier Schritten zu Ihrem Gold</h2>
+    <p class="section-sub">Einfach. Sicher. Transparent. Von der Grammatur bis zum eingelagerten Barren.</p>
   </div>
-  <div class="prozess-steps">
-    <div class="prozess-step">
-      <div class="prozess-step-number">1</div>
-      <div class="prozess-step-title">Beratung & Auswahl</div>
-      <p class="prozess-step-text">Sie wählen Ihre Goldposition — vom 100g Barren bis zum 1kg Standard. Unsere Berater begleiten Sie persönlich durch alle Optionen und Preisstufen.</p>
+
+  <!-- Timeline -->
+  <div class="prozess-timeline-wrap">
+    <div class="prozess-timeline-line"></div>
+    <div class="prozess-timeline-dots">
+      <div class="prozess-dot-wrap">
+        <div class="prozess-dot">1</div>
+        <span class="prozess-dot-label">Grammatur</span>
+      </div>
+      <div class="prozess-dot-wrap">
+        <div class="prozess-dot">2</div>
+        <span class="prozess-dot-label">Lieferzeit</span>
+      </div>
+      <div class="prozess-dot-wrap">
+        <div class="prozess-dot">3</div>
+        <span class="prozess-dot-label">Rabatt</span>
+      </div>
+      <div class="prozess-dot-wrap">
+        <div class="prozess-dot">4</div>
+        <span class="prozess-dot-label">Verwendung</span>
+      </div>
     </div>
-    <div class="prozess-step">
-      <div class="prozess-step-number">2</div>
-      <div class="prozess-step-title">Kauf & Zertifizierung</div>
-      <p class="prozess-step-text">Ihr Gold wird direkt von zertifizierten Raffinerien bezogen. Jeder Barren trägt Seriennummer, Gewicht und Reinheitsnachweis — London Good Delivery Standard.</p>
+  </div>
+
+  <!-- Scroll Cards -->
+  <div class="prozess-cards-track" id="prozess-track">
+    <!-- Karte 1: Grammatur wählen -->
+    <div class="prozess-card">
+      <div class="prozess-card-step">Schritt 01</div>
+      <div class="prozess-card-img">
+        <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <rect width="340" height="180" fill="rgba(201,168,76,0.05)"/>
+          <rect x="20" y="20" width="90" height="60" rx="4" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+          <rect x="125" y="20" width="90" height="60" rx="4" fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <rect x="230" y="20" width="90" height="60" rx="4" fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <rect x="20" y="100" width="90" height="60" rx="4" fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <rect x="125" y="100" width="90" height="60" rx="4" fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <rect x="230" y="100" width="90" height="60" rx="4" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+          <text x="65" y="55" text-anchor="middle" fill="#C9A84C" font-size="13" font-family="Inter">1 g</text>
+          <text x="170" y="55" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-size="13" font-family="Inter">10 g</text>
+          <text x="275" y="55" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-size="13" font-family="Inter">50 g</text>
+          <text x="65" y="135" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-size="13" font-family="Inter">100 g</text>
+          <text x="170" y="135" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-size="13" font-family="Inter">500 g</text>
+          <text x="275" y="135" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-size="13" font-family="Inter">1000 g</text>
+        </svg>
+      </div>
+      <div class="prozess-card-title">Grammatur wählen</div>
+      <div class="prozess-card-items">
+        <span class="prozess-tag">1 g</span>
+        <span class="prozess-tag">2 g</span>
+        <span class="prozess-tag">5 g</span>
+        <span class="prozess-tag">10 g</span>
+        <span class="prozess-tag">20 g</span>
+        <span class="prozess-tag">50 g</span>
+        <span class="prozess-tag">100 g</span>
+        <span class="prozess-tag">250 g</span>
+        <span class="prozess-tag">500 g</span>
+        <span class="prozess-tag">1000 g</span>
+      </div>
+      <p class="prozess-card-text">Wählen Sie die Menge die zu Ihrer Investitionsstrategie passt — vom Einsteiger bis zum erfahrenen Investor.</p>
     </div>
-    <div class="prozess-step">
-      <div class="prozess-step-number">3</div>
-      <div class="prozess-step-title">Lagerung & Zugang</div>
-      <p class="prozess-step-text">Ihr Barren wird vollversichert in einem zertifizierten Hochsicherheitstresor eingelagert. Jederzeit einsehbar, jederzeit abrufbar — oder direkt zu Ihnen geliefert.</p>
+
+    <!-- Karte 2: Lieferzeit -->
+    <div class="prozess-card">
+      <div class="prozess-card-step">Schritt 02</div>
+      <div class="prozess-card-img">
+        <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <rect width="340" height="180" fill="rgba(201,168,76,0.05)"/>
+          <circle cx="170" cy="90" r="65" fill="none" stroke="rgba(201,168,76,0.15)" stroke-width="1"/>
+          <circle cx="170" cy="90" r="55" fill="none" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <line x1="170" y1="35" x2="170" y2="90" stroke="#C9A84C" stroke-width="1.5"/>
+          <line x1="170" y1="90" x2="210" y2="90" stroke="rgba(201,168,76,0.5)" stroke-width="1.5"/>
+          <circle cx="170" cy="90" r="4" fill="#C9A84C"/>
+          <text x="170" y="28" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-size="10" font-family="Inter">12</text>
+          <text x="222" y="94" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-size="10" font-family="Inter">3</text>
+          <text x="170" y="162" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-size="10" font-family="Inter">6</text>
+          <text x="118" y="94" text-anchor="middle" fill="rgba(201,168,76,0.4)" font-size="10" font-family="Inter">9</text>
+        </svg>
+      </div>
+      <div class="prozess-card-title">Lieferzeit bestimmen</div>
+      <div style="margin-bottom:16px;">
+        <div class="prozess-card-highlight">1)</div>
+        <p class="prozess-card-text" style="margin-bottom:12px;">Versand ≤ 8 Wochen</p>
+        <div class="prozess-card-highlight">2)</div>
+        <p class="prozess-card-text">Versand nach 36 Monaten*</p>
+      </div>
+      <p class="prozess-card-text" style="font-size:11px;opacity:0.5;">*Produkt in Deutschland nicht verfügbar</p>
     </div>
+
+    <!-- Karte 3: Rabatt -->
+    <div class="prozess-card">
+      <div class="prozess-card-step">Schritt 03</div>
+      <div class="prozess-card-img">
+        <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <rect width="340" height="180" fill="rgba(201,168,76,0.05)"/>
+          <text x="80" y="110" fill="#C9A84C" font-size="72" font-family="Cormorant Garamond, serif" font-weight="300" opacity="0.8">7%</text>
+          <text x="195" y="80" fill="rgba(201,168,76,0.3)" font-size="48" font-family="Cormorant Garamond, serif" font-weight="300">2%</text>
+          <line x1="20" y1="130" x2="320" y2="130" stroke="rgba(201,168,76,0.1)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="prozess-card-title">Rabatt festlegen</div>
+      <div style="margin-bottom:12px;">
+        <div class="prozess-card-highlight">7 %</div>
+        <p class="prozess-card-text" style="margin-bottom:16px;">Nachlass auf den Kaufpreis</p>
+        <div class="prozess-card-highlight">2 %</div>
+        <p class="prozess-card-text">Rabatt pro Monat bei 36 Monaten*</p>
+      </div>
+    </div>
+
+    <!-- Karte 4: Verwendung -->
+    <div class="prozess-card">
+      <div class="prozess-card-step">Schritt 04</div>
+      <div class="prozess-card-img">
+        <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <rect width="340" height="180" fill="rgba(201,168,76,0.05)"/>
+          <!-- Laptop outline -->
+          <rect x="60" y="30" width="220" height="140" rx="6" fill="none" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <rect x="70" y="40" width="200" height="110" rx="2" fill="rgba(201,168,76,0.05)"/>
+          <!-- Screen content lines -->
+          <rect x="80" y="52" width="80" height="6" rx="2" fill="rgba(201,168,76,0.2)"/>
+          <rect x="80" y="66" width="120" height="4" rx="2" fill="rgba(201,168,76,0.1)"/>
+          <rect x="80" y="80" width="100" height="4" rx="2" fill="rgba(201,168,76,0.1)"/>
+          <rect x="80" y="100" width="60" height="20" rx="2" fill="rgba(201,168,76,0.15)" stroke="rgba(201,168,76,0.3)" stroke-width="1"/>
+          <rect x="155" y="100" width="60" height="20" rx="2" fill="rgba(201,168,76,0.08)" stroke="rgba(201,168,76,0.2)" stroke-width="1"/>
+          <text x="110" y="114" text-anchor="middle" fill="#C9A84C" font-size="9" font-family="Inter">Auszahlung</text>
+          <text x="185" y="114" text-anchor="middle" fill="rgba(201,168,76,0.5)" font-size="9" font-family="Inter">Neukauf</text>
+        </svg>
+      </div>
+      <div class="prozess-card-title">Verwendung bestimmen</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:32px;height:32px;border:1px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <div>
+            <div style="font-size:14px;color:var(--white);margin-bottom:2px;">Auszahlung</div>
+            <div style="font-size:12px;color:var(--gray);">Rabatt direkt ausgezahlt</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:32px;height:32px;border:1px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+          </div>
+          <div>
+            <div style="font-size:14px;color:var(--white);margin-bottom:2px;">Neuer Goldkauf</div>
+            <div style="font-size:12px;color:var(--gray);">Rabatt für weiteres Gold nutzen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA Button -->
+  <div class="prozess-cta">
+    <a href="#finale" class="cta-button">Jetzt investieren</a>
   </div>
 </section>
 
@@ -1367,6 +1589,14 @@ cards.forEach(card => {
   });
   card.addEventListener('mouseleave', () => { card.style.transform = ''; });
 });
+
+// ─── PROZESS CARDS DRAG ───
+const prozessTrack = document.getElementById('prozess-track');
+let pDragging = false, pStartX, pScrollLeft;
+prozessTrack.addEventListener('mousedown', e => { pDragging = true; prozessTrack.classList.add('grabbing'); pStartX = e.pageX - prozessTrack.offsetLeft; pScrollLeft = prozessTrack.scrollLeft; });
+prozessTrack.addEventListener('mouseleave', () => { pDragging = false; prozessTrack.classList.remove('grabbing'); });
+prozessTrack.addEventListener('mouseup', () => { pDragging = false; prozessTrack.classList.remove('grabbing'); });
+prozessTrack.addEventListener('mousemove', e => { if (!pDragging) return; e.preventDefault(); const x = e.pageX - prozessTrack.offsetLeft; prozessTrack.scrollLeft = pScrollLeft - (x - pStartX) * 1.5; });
 
 // ─── TESTIMONIALS DRAG ───
 const track = document.getElementById('testimonials-track');
