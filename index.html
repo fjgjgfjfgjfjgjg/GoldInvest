@@ -410,6 +410,80 @@
     max-width: 400px;
   }
 
+  /* ─── SECTION 3B: INVESTMENTPROZESS ─── */
+  #prozess {
+    padding: 140px 60px;
+    position: relative;
+    z-index: 1;
+  }
+  .prozess-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .prozess-header .section-title {
+    max-width: 600px;
+    margin: 0 auto 16px;
+  }
+  .prozess-header .section-sub {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .prozess-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .prozess-steps::before {
+    content: '';
+    position: absolute;
+    top: 36px;
+    left: 16%;
+    right: 16%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold-dark), var(--gold-dark), transparent);
+  }
+  .prozess-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 40px;
+  }
+  .prozess-step-number {
+    width: 72px;
+    height: 72px;
+    border: 1px solid var(--gold-dark);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--gold-light);
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 1;
+    background: var(--navy);
+  }
+  .prozess-step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .prozess-step-text {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
   /* ─── SECTION 4: GOLDBARREN VIDEO ─── */
   #gold-bar-section {
     height: 400vh;
@@ -501,10 +575,10 @@
     box-shadow: 0 0 10px var(--gold);
     margin-bottom: 10px;
   }
-  .info-point-1 { top: 14%; left: 5%; }
-  .info-point-2 { top: 14%; right: 5%; }
-  .info-point-3 { bottom: 14%; left: 5%; }
-  .info-point-4 { bottom: 14%; right: 5%; }
+  .info-point-1 { top: 8%; left: 22%; }
+  .info-point-2 { top: 8%; right: 22%; }
+  .info-point-3 { bottom: 8%; left: 22%; }
+  .info-point-4 { bottom: 8%; right: 22%; }
 
   /* ─── SECTION 5: TESTIMONIALS ─── */
   #testimonials {
@@ -688,7 +762,7 @@
 <section id="hero">
   <div class="hero-sticky video-fade">
     <video id="hero-video" muted playsinline preload="auto">
-      <source src="videos/Shot1A.mp4" type="video/mp4">
+      <source src="videos/opt_Shot1A.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-text" id="hero-text">
@@ -714,7 +788,7 @@
       <div class="wgv-fade-left"></div>
       <div class="wgv-fade-right"></div>
       <video autoplay muted loop playsinline>
-        <source src="videos/Shot1B.mp4" type="video/mp4">
+        <source src="videos/opt_Shot1B.mp4" type="video/mp4">
       </video>
     </div>
   </div>
@@ -756,7 +830,7 @@
 <section id="split-screen">
   <div class="split-left">
     <video id="smelt-video" muted playsinline preload="auto">
-      <source src="videos/Shot3.mp4" type="video/mp4">
+      <source src="videos/opt_Shot3.mp4" type="video/mp4">
     </video>
     <div class="split-left-overlay"></div>
   </div>
@@ -789,15 +863,41 @@
   </div>
 </section>
 
+<!-- SECTION 3B: INVESTMENTPROZESS -->
+<section id="prozess">
+  <div class="prozess-header">
+    <div class="section-eyebrow">So funktioniert es</div>
+    <h2 class="section-title">In drei Schritten zu Ihrem Gold</h2>
+    <p class="section-sub">Einfach. Sicher. Transparent. Von der ersten Anfrage bis zum eingelagerten Barren.</p>
+  </div>
+  <div class="prozess-steps">
+    <div class="prozess-step">
+      <div class="prozess-step-number">1</div>
+      <div class="prozess-step-title">Beratung & Auswahl</div>
+      <p class="prozess-step-text">Sie wählen Ihre Goldposition — vom 100g Barren bis zum 1kg Standard. Unsere Berater begleiten Sie persönlich durch alle Optionen und Preisstufen.</p>
+    </div>
+    <div class="prozess-step">
+      <div class="prozess-step-number">2</div>
+      <div class="prozess-step-title">Kauf & Zertifizierung</div>
+      <p class="prozess-step-text">Ihr Gold wird direkt von zertifizierten Raffinerien bezogen. Jeder Barren trägt Seriennummer, Gewicht und Reinheitsnachweis — London Good Delivery Standard.</p>
+    </div>
+    <div class="prozess-step">
+      <div class="prozess-step-number">3</div>
+      <div class="prozess-step-title">Lagerung & Zugang</div>
+      <p class="prozess-step-text">Ihr Barren wird vollversichert in einem zertifizierten Hochsicherheitstresor eingelagert. Jederzeit einsehbar, jederzeit abrufbar — oder direkt zu Ihnen geliefert.</p>
+    </div>
+  </div>
+</section>
+
 <!-- SECTION 4: GOLDBARREN VIDEO -->
 <section id="gold-bar-section">
   <div class="gold-bar-sticky video-fade">
     <div class="gold-video-container">
       <video id="gold-video-a" muted playsinline preload="auto">
-        <source src="videos/4A-haende-kommen.mp4" type="video/mp4">
+        <source src="videos/opt_4A-haende-kommen.mp4" type="video/mp4">
       </video>
       <video id="gold-video-b" muted playsinline preload="auto">
-        <source src="videos/4B-saeule-steigt.mp4" type="video/mp4">
+        <source src="videos/opt_4B-saeule-steigt.mp4" type="video/mp4">
       </video>
     </div>
     <div class="gold-info-points">
@@ -872,7 +972,7 @@
 <section id="finale">
   <div class="finale-sticky video-fade">
     <video id="vault-video" muted playsinline preload="auto">
-      <source src="videos/Shot2A.mp4" type="video/mp4">
+      <source src="videos/opt_Shot2A.mp4" type="video/mp4">
     </video>
     <div class="finale-overlay" id="finale-overlay">
       <h2 class="finale-title">Ihr Gold.<br><em>Sicher verwahrt.</em><br>Für immer.</h2>
