@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Investment — Sicherheit die bleibt</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+
+  :root {
+    --navy: #0D1B2A;
+    --navy-mid: #112236;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --white: #F5F0E8;
+    --gray: #8A8F9A;
+    --card-bg: rgba(255,255,255,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: auto; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(13,27,42,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+  }
+  .nav-cta {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold-dark);
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: transparent;
+    text-decoration: none;
+  }
+  .nav-cta:hover { background: var(--gold); color: var(--navy); }
+
+  /* ─── SECTION 1: HERO VIDEO ─── */
+  #hero {
+    position: relative;
+    height: 300vh;
+  }
+  .hero-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,27,42,0.3) 0%, rgba(13,27,42,0.1) 50%, rgba(13,27,42,0.8) 100%);
+  }
+  .hero-text {
+    position: absolute;
+    bottom: 12%;
+    left: 60px;
+    right: 60px;
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease 0.3s;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.2s ease 0.5s;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-text.visible .hero-eyebrow,
+  .hero-text.visible .hero-title { opacity: 1; transform: translateY(0); }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.5;
+  }
+  .scroll-hint span { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  @keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  /* ─── SECTION 2: WHY GOLD ─── */
+  #why-gold {
+    padding: 120px 60px;
+    position: relative;
+  }
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 300;
+    line-height: 1.1;
+    max-width: 700px;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--gray);
+    max-width: 540px;
+    line-height: 1.7;
+    margin-bottom: 80px;
+  }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.12);
+    padding: 40px 36px;
+    cursor: default;
+    transition: transform 0.1s ease, border-color 0.3s;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .card:hover { border-color: rgba(201,168,76,0.35); }
+  .card-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--gold-dark);
+    opacity: 0.5;
+    margin-bottom: 24px;
+    line-height: 1;
+  }
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: var(--gold-light);
+  }
+  .card-points { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+  .card-points li {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(245,240,232,0.75);
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+  }
+  .card-points li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 4px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  /* ─── SECTION 3: SPLIT SCREEN ─── */
+  #split-screen {
+    display: flex;
+    height: 500vh;
+    position: relative;
+  }
+  .split-left {
+    position: sticky;
+    top: 0;
+    width: 50%;
+    height: 100vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  #smelt-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .split-left-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(13,27,42,0.4));
+  }
+  .split-right {
+    width: 50%;
+    padding: 0 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+  .split-text-item {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0.25;
+    transition: opacity 0.6s ease;
+    padding: 40px 0;
+  }
+  .split-text-item.active { opacity: 1; }
+  .split-item-number {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .split-item-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+  .split-item-text {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--gray);
+    line-height: 1.8;
+    max-width: 400px;
+  }
+
+  /* ─── SECTION 4: GOLDBARREN VIDEO ─── */
+  #gold-bar-section {
+    height: 400vh;
+    position: relative;
+  }
+  .gold-bar-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gold-video-container {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .gold-video-container video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.4s ease;
+  }
+  #gold-video-b { opacity: 0; }
+  .gold-info-points {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .info-point {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .info-point.visible { opacity: 1; }
+  .info-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    box-shadow: 0 0 12px var(--gold);
+  }
+  .info-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    flex-shrink: 0;
+  }
+  .info-text { max-width: 200px; }
+  .info-text strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--gold-light);
+    margin-bottom: 4px;
+  }
+  .info-text span {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+  .info-point-1 { top: 28%; left: 6%; }
+  .info-point-2 { top: 18%; right: 6%; flex-direction: row-reverse; }
+  .info-point-2 .info-line { background: linear-gradient(to left, var(--gold), transparent); }
+  .info-point-3 { top: 58%; left: 6%; }
+  .info-point-4 { top: 68%; right: 6%; flex-direction: row-reverse; }
+  .info-point-4 .info-line { background: linear-gradient(to left, var(--gold), transparent); }
+
+  /* ─── SECTION 5: TESTIMONIALS ─── */
+  #testimonials {
+    padding: 120px 60px;
+    overflow: hidden;
+  }
+  .testimonials-header { margin-bottom: 60px; }
+  .testimonials-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    scrollbar-width: none;
+    cursor: grab;
+  }
+  .testimonials-track::-webkit-scrollbar { display: none; }
+  .testimonials-track.grabbing { cursor: grabbing; }
+  .testimonial-card {
+    flex-shrink: 0;
+    width: 380px;
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 40px;
+  }
+  .testimonial-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .star {
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    color: var(--white);
+  }
+  .testimonial-author { display: flex; flex-direction: column; gap: 4px; }
+  .author-name { font-size: 14px; font-weight: 500; color: var(--gold-light); }
+  .author-info { font-size: 12px; font-weight: 300; color: var(--gray); }
+
+  /* ─── SECTION 6: FINALE TRESOR ─── */
+  #finale {
+    position: relative;
+    height: 300vh;
+  }
+  .finale-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #vault-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .finale-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(13,27,42,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .finale-overlay.visible { opacity: 1; }
+  .finale-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    max-width: 800px;
+  }
+  .finale-title em { font-style: italic; color: var(--gold-light); }
+  .finale-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--gray);
+    margin-bottom: 48px;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+  .cta-button {
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--navy);
+    background: var(--gold);
+    padding: 18px 48px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .cta-button:hover { background: var(--gold-light); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080F18;
+    padding: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--gold-light);
+  }
+  .footer-copy {
+    font-size: 12px;
+    color: var(--gray);
+    font-weight: 300;
+  }
+  .footer-links { display: flex; gap: 32px; }
+  .footer-links a {
+    font-size: 12px;
+    color: var(--gray);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ─── DIVIDER ─── */
+  .gold-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 80px;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AURUM</div>
+  <a href="#finale" class="nav-cta">Jetzt investieren</a>
+</nav>
+
+<!-- SECTION 1: HERO -->
+<section id="hero">
+  <div class="hero-sticky">
+    <video id="hero-video" muted playsinline preload="auto">
+      <source src="videos/Shot1A.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-text" id="hero-text">
+      <div class="hero-eyebrow">Seit 5000 Jahren. Heute mehr denn je.</div>
+      <h1 class="hero-title">Gold ist nicht<br>nur ein Metall.<br><em>Es ist Gewissheit.</em></h1>
+    </div>
+    <div class="scroll-hint">
+      <span>Scrollen</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: WHY GOLD -->
+<section id="why-gold">
+  <div class="section-eyebrow">Warum Gold</div>
+  <h2 class="section-title">Drei Gründe, warum kluge Investoren jetzt handeln</h2>
+  <p class="section-sub">In einer Welt voller Unsicherheit ist Gold das einzige Asset, das seit Jahrtausenden seinen Wert behält — unabhängig von Regierungen, Banken oder digitalen Systemen.</p>
+  <div class="cards-grid" id="cards-grid">
+    <div class="card" data-card>
+      <div class="card-number">01</div>
+      <div class="card-title">Krisenresistenz</div>
+      <ul class="card-points">
+        <li>Kein Gegenparteirisiko wie bei Aktien oder Anleihen</li>
+        <li>Historisch stabile Wertentwicklung in Krisenzeiten</li>
+        <li>Physischer Besitz — unabhängig von Banken</li>
+        <li>Schutz vor Währungsabwertung und Inflation</li>
+      </ul>
+    </div>
+    <div class="card" data-card>
+      <div class="card-number">02</div>
+      <div class="card-title">Globale Nachfrage</div>
+      <ul class="card-points">
+        <li>Zentralbanken kaufen so viel Gold wie seit 50 Jahren nicht</li>
+        <li>Wachsende Nachfrage aus Asien und Schwellenländern</li>
+        <li>Begrenzte Fördermengen weltweit</li>
+        <li>Industrielle Nachfrage durch Technologie steigt</li>
+      </ul>
+    </div>
+    <div class="card" data-card>
+      <div class="card-number">03</div>
+      <div class="card-title">Portfolioschutz</div>
+      <ul class="card-points">
+        <li>Negative Korrelation zu Aktienmärkten in Crashphasen</li>
+        <li>Diversifikation gegen digitale Asset-Risiken</li>
+        <li>Empfohlen: 10–20% des Portfolios in Gold</li>
+        <li>Liquide — weltweit handelbar rund um die Uhr</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: SPLIT SCREEN -->
+<section id="split-screen">
+  <div class="split-left">
+    <video id="smelt-video" muted playsinline preload="auto">
+      <source src="videos/Shot3.mp4" type="video/mp4">
+    </video>
+    <div class="split-left-overlay"></div>
+  </div>
+  <div class="split-right" id="split-right">
+    <div class="split-text-item active" data-split-item>
+      <div class="split-item-number">01 / 05</div>
+      <h3 class="split-item-title">Vom Erz zum Barren</h3>
+      <p class="split-item-text">Gold entsteht unter extremem Druck — in der Erde über Millionen von Jahren. Dieser Prozess macht es so selten und wertvoll. Jeder Barren beginnt als roher Klumpen tief im Fels.</p>
+    </div>
+    <div class="split-text-item" data-split-item>
+      <div class="split-item-number">02 / 05</div>
+      <h3 class="split-item-title">Reinheit durch Feuer</h3>
+      <p class="split-item-text">Bei über 1.064 Grad schmilzt Gold zu einem leuchtend orangen Fluss. Verunreinigungen werden abgetrennt. Was übrig bleibt, ist 999,9 % reines Feingold — der höchste Standard der Welt.</p>
+    </div>
+    <div class="split-text-item" data-split-item>
+      <div class="split-item-number">03 / 05</div>
+      <h3 class="split-item-title">Die Form des Vertrauens</h3>
+      <p class="split-item-text">Der gegossene Barren trägt Gewicht, Herkunft und Seriennummer. Ein zertifizierter 1 kg Barren ist international anerkannt — von Frankfurt bis Tokio, von Dubai bis New York.</p>
+    </div>
+    <div class="split-text-item" data-split-item>
+      <div class="split-item-number">04 / 05</div>
+      <h3 class="split-item-title">Zertifiziert und geprüft</h3>
+      <p class="split-item-text">Jeder Barren wird von unabhängigen Gutachtern geprüft und zertifiziert. London Good Delivery ist der strengste Standard — und der einzige, der auf dem globalen Markt gilt.</p>
+    </div>
+    <div class="split-text-item" data-split-item>
+      <div class="split-item-number">05 / 05</div>
+      <h3 class="split-item-title">Ihr Barren. Ihre Sicherheit.</h3>
+      <p class="split-item-text">Was Sie investieren, gehört Ihnen. Physisch. Greifbar. In einem zertifizierten Tresor unter Ihrem Namen verwahrt — oder direkt zu Ihnen geliefert. Kein Versprechen. Echtes Metall.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: GOLDBARREN VIDEO -->
+<section id="gold-bar-section">
+  <div class="gold-bar-sticky">
+    <div class="gold-video-container">
+      <video id="gold-video-a" muted playsinline preload="auto">
+        <source src="videos/4A-haende-kommen.mp4" type="video/mp4">
+      </video>
+      <video id="gold-video-b" muted playsinline preload="auto">
+        <source src="videos/4B-saeule-steigt.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="gold-info-points">
+      <div class="info-point info-point-1" id="info-1">
+        <div class="info-dot"></div>
+        <div class="info-line"></div>
+        <div class="info-text">
+          <strong>999,9 Feinheit</strong>
+          <span>Höchster<br>Reinheitsstandard</span>
+        </div>
+      </div>
+      <div class="info-point info-point-2" id="info-2">
+        <div class="info-dot"></div>
+        <div class="info-line"></div>
+        <div class="info-text">
+          <strong>1 Kilogramm</strong>
+          <span>London Good<br>Delivery Standard</span>
+        </div>
+      </div>
+      <div class="info-point info-point-3" id="info-3">
+        <div class="info-dot"></div>
+        <div class="info-line"></div>
+        <div class="info-text">
+          <strong>Zertifiziert</strong>
+          <span>Seriennummer &<br>Herkunftsnachweis</span>
+        </div>
+      </div>
+      <div class="info-point info-point-4" id="info-4">
+        <div class="info-dot"></div>
+        <div class="info-line"></div>
+        <div class="info-text">
+          <strong>Versichert</strong>
+          <span>Vollkasko in<br>zertifizierten Tresoren</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5: TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-header">
+    <div class="section-eyebrow">Investoren berichten</div>
+    <h2 class="section-title">Was unsere Kunden sagen</h2>
+  </div>
+  <div class="testimonials-track" id="testimonials-track">
+    <div class="testimonial-card">
+      <div class="testimonial-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <p class="testimonial-quote">„Ich habe 15% meines Portfolios in physisches Gold umgeschichtet. Seitdem schlafe ich besser — kein Witz."</p>
+      <div class="testimonial-author"><span class="author-name">Michael R.</span><span class="author-info">Unternehmer, München</span></div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <p class="testimonial-quote">„Nach der Inflation 2022 war mir klar: Papiergeld ist keine Sicherheit. Mein erster Barren war die beste Entscheidung des Jahres."</p>
+      <div class="testimonial-author"><span class="author-name">Sandra K.</span><span class="author-info">Ärztin, Hamburg</span></div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <p class="testimonial-quote">„Als Unternehmer denke ich langfristig. Gold ist das einzige Asset das ich meinen Kindern weitergeben würde."</p>
+      <div class="testimonial-author"><span class="author-name">Thomas W.</span><span class="author-info">Geschäftsführer, Frankfurt</span></div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <p class="testimonial-quote">„Der Prozess war einfacher als ich dachte. Innerhalb einer Woche war mein Barren im Tresor — sicher, versichert, meins."</p>
+      <div class="testimonial-author"><span class="author-name">Julia M.</span><span class="author-info">Investorin, Wien</span></div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <p class="testimonial-quote">„Ich war skeptisch gegenüber physischem Gold. Heute besitze ich 3 Barren und empfehle es jedem in meinem Netzwerk."</p>
+      <div class="testimonial-author"><span class="author-name">Andreas B.</span><span class="author-info">Finanzberater, Zürich</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6: FINALE -->
+<section id="finale">
+  <div class="finale-sticky">
+    <video id="vault-video" muted playsinline preload="auto">
+      <source src="videos/Shot2A.mp4" type="video/mp4">
+    </video>
+    <div class="finale-overlay" id="finale-overlay">
+      <h2 class="finale-title">Ihr Gold.<br><em>Sicher verwahrt.</em><br>Für immer.</h2>
+      <p class="finale-sub">Starten Sie heute mit Ihrer ersten Gold-Position. Bereits ab 5.000 € — zertifiziert, versichert, und jederzeit zugänglich.</p>
+      <a href="#" class="cta-button">Jetzt unverbindlich anfragen</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">AURUM</div>
+  <div class="footer-copy">© 2025 Aurum Investment GmbH. Alle Rechte vorbehalten.</div>
+  <div class="footer-links">
+    <a href="#">Impressum</a>
+    <a href="#">Datenschutz</a>
+    <a href="#">Kontakt</a>
+  </div>
+</footer>
+
+<!-- THREE.JS -->
+<script>
+// ─── HERO TEXT REVEAL ───
+setTimeout(() => {
+  document.getElementById('hero-text').classList.add('visible');
+}, 300);
+
+// ─── SCROLL UTILITY ───
+function getScrollProgress(el) {
+  const rect = el.getBoundingClientRect();
+  const total = el.offsetHeight - window.innerHeight;
+  const scrolled = -rect.top;
+  return Math.max(0, Math.min(1, scrolled / total));
+}
+
+// ─── HERO VIDEO SCRUB ───
+const heroVideo = document.getElementById('hero-video');
+const heroSection = document.getElementById('hero');
+heroVideo.addEventListener('loadedmetadata', () => {
+  heroVideo.pause();
+});
+
+// ─── SMELT VIDEO SCRUB ───
+const smeltVideo = document.getElementById('smelt-video');
+smeltVideo.addEventListener('loadedmetadata', () => { smeltVideo.pause(); });
+
+// ─── SPLIT SCREEN ACTIVATION ───
+const splitItems = document.querySelectorAll('[data-split-item]');
+
+// ─── VAULT VIDEO ───
+const vaultVideo = document.getElementById('vault-video');
+vaultVideo.addEventListener('loadedmetadata', () => { vaultVideo.pause(); });
+
+// ─── CURSOR CARDS ───
+const cards = document.querySelectorAll('[data-card]');
+cards.forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(600px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg) translateZ(8px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
+
+// ─── TESTIMONIALS DRAG ───
+const track = document.getElementById('testimonials-track');
+let isDragging = false, startX, scrollLeft;
+track.addEventListener('mousedown', e => {
+  isDragging = true;
+  track.classList.add('grabbing');
+  startX = e.pageX - track.offsetLeft;
+  scrollLeft = track.scrollLeft;
+});
+track.addEventListener('mouseleave', () => { isDragging = false; track.classList.remove('grabbing'); });
+track.addEventListener('mouseup', () => { isDragging = false; track.classList.remove('grabbing'); });
+track.addEventListener('mousemove', e => {
+  if (!isDragging) return;
+  e.preventDefault();
+  const x = e.pageX - track.offsetLeft;
+  track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+});
+
+// ─── SECTION 4: VIDEO SCRUB ───
+const goldSection = document.getElementById('gold-bar-section');
+const infoPoints = document.querySelectorAll('.info-point');
+const goldVideoA = document.getElementById('gold-video-a');
+const goldVideoB = document.getElementById('gold-video-b');
+
+[goldVideoA, goldVideoB].forEach(v => {
+  v.addEventListener('loadedmetadata', () => { v.pause(); });
+});
+
+function updateGoldVideos(progress) {
+  if (progress < 0.45) {
+    // Phase 1: Video A — Hände kommen
+    const p = progress / 0.45;
+    if (goldVideoA.duration) goldVideoA.currentTime = p * goldVideoA.duration;
+    goldVideoA.style.opacity = '1';
+    goldVideoB.style.opacity = '0';
+    infoPoints.forEach(pt => pt.classList.remove('visible'));
+  } else if (progress < 0.5) {
+    // Crossfade
+    const p = (progress - 0.45) / 0.05;
+    goldVideoA.style.opacity = String(1 - p);
+    goldVideoB.style.opacity = String(p);
+    if (goldVideoB.duration) goldVideoB.currentTime = 0;
+    infoPoints.forEach(pt => pt.classList.remove('visible'));
+  } else if (progress < 0.85) {
+    // Phase 2: Video B — Säule + Ablegen + Hände gehen
+    const p = (progress - 0.5) / 0.35;
+    if (goldVideoB.duration) goldVideoB.currentTime = p * goldVideoB.duration;
+    goldVideoA.style.opacity = '0';
+    goldVideoB.style.opacity = '1';
+    // Info points erscheinen ab 65% des Gesamtscrolls
+    infoPoints.forEach((pt, i) => {
+      if (p > 0.5 + i * 0.12) pt.classList.add('visible');
+      else pt.classList.remove('visible');
+    });
+  } else {
+    // Phase 3: Goldbarren steht — alle Punkte sichtbar
+    goldVideoA.style.opacity = '0';
+    goldVideoB.style.opacity = '1';
+    if (goldVideoB.duration) goldVideoB.currentTime = goldVideoB.duration;
+    infoPoints.forEach(pt => pt.classList.add('visible'));
+  }
+}
+
+// ─── MAIN SCROLL HANDLER ───
+window.addEventListener('scroll', () => {
+  // Hero video scrub
+  if (heroVideo.duration) {
+    const p = getScrollProgress(heroSection);
+    heroVideo.currentTime = p * heroVideo.duration;
+  }
+
+  // Smelt video scrub
+  const splitSection = document.getElementById('split-screen');
+  if (smeltVideo.duration) {
+    const p = getScrollProgress(splitSection);
+    smeltVideo.currentTime = p * smeltVideo.duration;
+  }
+
+  // Split text items
+  const splitP = getScrollProgress(splitSection);
+  const itemIndex = Math.floor(splitP * splitItems.length);
+  splitItems.forEach((item, i) => {
+    if (i === itemIndex) item.classList.add('active');
+    else item.classList.remove('active');
+  });
+
+  // Gold videos
+  const goldP = getScrollProgress(goldSection);
+  updateGoldVideos(goldP);
+
+  // Vault video + finale overlay
+  const finaleSection = document.getElementById('finale');
+  const finaleP = getScrollProgress(finaleSection);
+  if (vaultVideo.duration) {
+    vaultVideo.currentTime = finaleP * vaultVideo.duration * 0.7;
+  }
+  if (finaleP > 0.6) {
+    document.getElementById('finale-overlay').classList.add('visible');
+  } else {
+    document.getElementById('finale-overlay').classList.remove('visible');
+  }
+});
+
+
+</script>
+</body>
+</html>
