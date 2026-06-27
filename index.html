@@ -359,6 +359,59 @@
     background: linear-gradient(to left, rgba(13,27,42,0.9), transparent);
   }
 
+  /* ─── SECTION 2B: BADGES ─── */
+  #badges {
+    padding: 60px 60px;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    position: relative;
+    z-index: 1;
+  }
+  .badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+  }
+  .badge-wreath {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 160px;
+  }
+  .badge-wreath svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+  }
+  .badge-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .badge-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+    color: var(--gold-light);
+    line-height: 1;
+    display: block;
+  }
+  .badge-label {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--gray);
+    letter-spacing: 0.08em;
+    text-align: center;
+    line-height: 1.4;
+  }
+
   /* ─── SECTION 3: SPLIT SCREEN ─── */
   #split-screen {
     display: flex;
@@ -908,6 +961,71 @@
         <li>Empfohlen: 10–20% des Portfolios in Gold</li>
         <li>Liquide — weltweit handelbar rund um die Uhr</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2B: BADGES -->
+<section id="badges">
+  <div class="badge">
+    <div class="badge-wreath">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#C9A84C" stroke-width="1.5">
+          <!-- Left wreath -->
+          <path d="M40,100 Q30,85 35,70 Q45,75 40,90"/>
+          <path d="M38,95 Q25,82 28,65 Q40,70 38,85"/>
+          <path d="M42,105 Q28,95 30,78 Q42,82 42,97"/>
+          <path d="M44,115 Q30,108 30,90 Q43,93 44,108"/>
+          <path d="M48,124 Q34,120 36,102 Q48,104 48,118"/>
+          <path d="M36,88 Q26,72 32,57 Q43,64 36,80"/>
+          <path d="M40,78 Q33,60 42,47 Q52,56 43,70"/>
+          <path d="M48,70 Q44,52 56,42 Q63,53 52,64"/>
+          <!-- Right wreath -->
+          <path d="M160,100 Q170,85 165,70 Q155,75 160,90"/>
+          <path d="M162,95 Q175,82 172,65 Q160,70 162,85"/>
+          <path d="M158,105 Q172,95 170,78 Q158,82 158,97"/>
+          <path d="M156,115 Q170,108 170,90 Q157,93 156,108"/>
+          <path d="M152,124 Q166,120 164,102 Q152,104 152,118"/>
+          <path d="M164,88 Q174,72 168,57 Q157,64 164,80"/>
+          <path d="M160,78 Q167,60 158,47 Q148,56 157,70"/>
+          <path d="M152,70 Q156,52 144,42 Q137,53 148,64"/>
+          <!-- Bottom connector -->
+          <path d="M85,148 Q100,155 115,148" stroke-width="1"/>
+        </g>
+      </svg>
+      <div class="badge-inner">
+        <span class="badge-number">€ 100M+</span>
+        <span class="badge-label">an Rabatten<br>ausbezahlt</span>
+      </div>
+    </div>
+  </div>
+  <div class="badge">
+    <div class="badge-wreath">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="#C9A84C" stroke-width="1.5">
+          <path d="M40,100 Q30,85 35,70 Q45,75 40,90"/>
+          <path d="M38,95 Q25,82 28,65 Q40,70 38,85"/>
+          <path d="M42,105 Q28,95 30,78 Q42,82 42,97"/>
+          <path d="M44,115 Q30,108 30,90 Q43,93 44,108"/>
+          <path d="M48,124 Q34,120 36,102 Q48,104 48,118"/>
+          <path d="M36,88 Q26,72 32,57 Q43,64 36,80"/>
+          <path d="M40,78 Q33,60 42,47 Q52,56 43,70"/>
+          <path d="M48,70 Q44,52 56,42 Q63,53 52,64"/>
+          <path d="M160,100 Q170,85 165,70 Q155,75 160,90"/>
+          <path d="M162,95 Q175,82 172,65 Q160,70 162,85"/>
+          <path d="M158,105 Q172,95 170,78 Q158,82 158,97"/>
+          <path d="M156,115 Q170,108 170,90 Q157,93 156,108"/>
+          <path d="M152,124 Q166,120 164,102 Q152,104 152,118"/>
+          <path d="M164,88 Q174,72 168,57 Q157,64 164,80"/>
+          <path d="M160,78 Q167,60 158,47 Q148,56 157,70"/>
+          <path d="M152,70 Q156,52 144,42 Q137,53 148,64"/>
+          <path d="M85,148 Q100,155 115,148" stroke-width="1"/>
+        </g>
+      </svg>
+      <div class="badge-inner">
+        <span class="badge-number">50.000+</span>
+        <span class="badge-label">glückliche<br>Investoren</span>
+      </div>
     </div>
   </div>
 </section>
