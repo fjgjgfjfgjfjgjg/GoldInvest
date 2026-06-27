@@ -90,7 +90,9 @@
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(13,27,42,0.6) 0%, rgba(13,27,42,0.1) 40%, rgba(13,27,42,0.1) 60%, rgba(13,27,42,0.9) 100%);
+    background: 
+      radial-gradient(ellipse at 30% 60%, rgba(13,27,42,0.7) 0%, transparent 60%),
+      linear-gradient(to bottom, rgba(13,27,42,0.6) 0%, rgba(13,27,42,0.15) 40%, rgba(13,27,42,0.15) 60%, rgba(13,27,42,0.9) 100%);
   }
   .hero-text {
     position: absolute;
@@ -107,6 +109,7 @@
     opacity: 0;
     transform: translateY(20px);
     transition: all 1s ease 0.3s;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 40px rgba(0,0,0,0.7);
   }
   .hero-title {
     font-family: 'Cormorant Garamond', serif;
@@ -118,10 +121,12 @@
     opacity: 0;
     transform: translateY(30px);
     transition: all 1.2s ease 0.5s;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.95), 0 4px 60px rgba(0,0,0,0.8);
   }
   .hero-title em {
     font-style: italic;
     color: var(--gold-light);
+    text-shadow: 0 2px 30px rgba(0,0,0,0.95), 0 4px 60px rgba(0,0,0,0.8);
   }
   .hero-text.visible .hero-eyebrow,
   .hero-text.visible .hero-title { opacity: 1; transform: translateY(0); }
@@ -598,6 +603,73 @@
   .info-point-3 { bottom: 16%; left: 22%; }
   .info-point-4 { bottom: 16%; right: 22%; }
 
+  /* ─── SECTION 4B: PRODUKTDETAILS ─── */
+  #produktdetails {
+    padding: 100px 60px;
+    position: relative;
+    z-index: 1;
+  }
+  .produkt-card {
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 60px 70px;
+    position: relative;
+  }
+  .produkt-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 60px;
+    width: 80px;
+    height: 1px;
+    background: var(--navy);
+  }
+  .produkt-card-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .produkt-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+  .produkt-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .produkt-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+  }
+  .produkt-row:last-child { border-bottom: none; }
+  .produkt-label {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+  }
+  .produkt-value {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(245,240,232,0.75);
+    line-height: 1.5;
+  }
+  .produkt-highlight {
+    color: var(--white);
+    font-weight: 400;
+  }
+
   /* ─── SECTION 5: TESTIMONIALS ─── */
   #testimonials {
     padding: 120px 60px;
@@ -936,6 +1008,52 @@
           <strong>Vollversichert</strong>
           <span>Vollkasko in zertifizierten Tresoren</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4B: PRODUKTDETAILS -->
+<section id="produktdetails">
+  <div class="produkt-card">
+    <div class="produkt-card-eyebrow">Produktdetails</div>
+    <h2 class="produkt-card-title">Höchste Feingoldqualität mit klaren Konditionen</h2>
+    <div class="produkt-rows">
+      <div class="produkt-row">
+        <span class="produkt-label">Feingehalt</span>
+        <span class="produkt-value produkt-highlight">24 Karat</span>
+      </div>
+      <div class="produkt-row">
+        <span class="produkt-label">Reinheit</span>
+        <span class="produkt-value produkt-highlight">999,9 — Höchster Weltstandard</span>
+      </div>
+      <div class="produkt-row">
+        <span class="produkt-label">Grammaturen</span>
+        <span class="produkt-value">1 g – 1.000 g</span>
+      </div>
+      <div class="produkt-row">
+        <span class="produkt-label">Zertifizierung</span>
+        <span class="produkt-value">LBMA zertifiziert — London Good Delivery</span>
+      </div>
+      <div class="produkt-row">
+        <span class="produkt-label">Lieferung</span>
+        <span class="produkt-value">Versand innerhalb 8 Wochen &nbsp;|&nbsp; Lagerung bis 36 Monate</span>
+      </div>
+      <div class="produkt-row">
+        <span class="produkt-label">Transparenz</span>
+        <span class="produkt-value">Keine versteckten Kosten — Festpreis ab Bestellung</span>
+      </div>
+      <div class="produkt-row">
+        <span class="produkt-label">Flexibilität</span>
+        <span class="produkt-value">Lieferung nach Hause &nbsp;|&nbsp; Ankauf jederzeit möglich</span>
+      </div>
+      <div class="produkt-row">
+        <span class="produkt-label">Einstieg</span>
+        <span class="produkt-value produkt-highlight">Bereits ab 1 g möglich</span>
+      </div>
+      <div class="produkt-row">
+        <span class="produkt-label">Preisvorteil</span>
+        <span class="produkt-value">7 % Kaufpreisnachlass &nbsp;|&nbsp; 2 % Rabatt pro Monat</span>
       </div>
     </div>
   </div>
