@@ -82,7 +82,7 @@
   .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(13,27,42,0.3) 0%, rgba(13,27,42,0.1) 50%, rgba(13,27,42,0.8) 100%);
+    background: linear-gradient(to bottom, rgba(13,27,42,0.6) 0%, rgba(13,27,42,0.1) 40%, rgba(13,27,42,0.1) 60%, rgba(13,27,42,0.9) 100%);
   }
   .hero-text {
     position: absolute;
@@ -139,6 +139,55 @@
   @keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
 
   /* ─── SECTION 2: WHY GOLD ─── */
+  .why-gold-header {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+  .why-gold-text {
+    flex: 1;
+  }
+  .why-gold-text .section-sub {
+    margin-bottom: 0;
+  }
+  .why-gold-video {
+    flex-shrink: 0;
+    width: 420px;
+    height: 280px;
+    overflow: hidden;
+    border: none;
+    position: relative;
+  }
+  .why-gold-video::before,
+  .why-gold-video::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .why-gold-video::before {
+    top: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--navy), transparent);
+  }
+  .why-gold-video::after {
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to top, var(--navy), transparent);
+  }
+  .why-gold-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .why-gold-video::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(13,27,42,0.2), transparent);
+    pointer-events: none;
+  }
   #why-gold {
     padding: 120px 60px;
     position: relative;
@@ -216,6 +265,42 @@
     background: var(--gold);
   }
 
+  /* ─── VIDEO EDGE FADE (global) ─── */
+  .video-fade::before,
+  .video-fade::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 180px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .video-fade::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--navy), transparent);
+  }
+  .video-fade::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--navy), transparent);
+  }
+  .video-fade-sides::before,
+  .video-fade-sides::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 120px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .video-fade-sides::before {
+    left: 0;
+    background: linear-gradient(to right, var(--navy), transparent);
+  }
+  .video-fade-sides::after {
+    right: 0;
+    background: linear-gradient(to left, var(--navy), transparent);
+  }
+
   /* ─── SECTION 3: SPLIT SCREEN ─── */
   #split-screen {
     display: flex;
@@ -249,7 +334,7 @@
     gap: 0;
   }
   .split-text-item {
-    min-height: 100vh;
+    min-height: 20vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -323,33 +408,35 @@
   }
   .info-point.visible { opacity: 1; }
   .info-dot {
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: var(--gold);
     flex-shrink: 0;
-    box-shadow: 0 0 12px var(--gold);
+    box-shadow: 0 0 20px var(--gold), 0 0 40px rgba(201,168,76,0.4);
   }
   .info-line {
-    width: 60px;
+    width: 80px;
     height: 1px;
-    background: linear-gradient(to right, var(--gold), transparent);
+    background: linear-gradient(to right, var(--gold), rgba(201,168,76,0.3));
     flex-shrink: 0;
   }
-  .info-text { max-width: 200px; }
+  .info-text { max-width: 260px; }
   .info-text strong {
     display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
+    font-size: 28px;
     font-weight: 400;
     color: var(--gold-light);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
   }
   .info-text span {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 300;
-    color: var(--gray);
+    color: var(--white);
     line-height: 1.5;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
   }
   .info-point-1 { top: 28%; left: 6%; }
   .info-point-2 { top: 18%; right: 6%; flex-direction: row-reverse; }
@@ -513,13 +600,13 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">AURUM</div>
+  <div class="nav-logo">Gold Invest Test</div>
   <a href="#finale" class="nav-cta">Jetzt investieren</a>
 </nav>
 
 <!-- SECTION 1: HERO -->
 <section id="hero">
-  <div class="hero-sticky">
+  <div class="hero-sticky video-fade video-fade-sides">
     <video id="hero-video" muted playsinline preload="auto">
       <source src="videos/Shot1A.mp4" type="video/mp4">
     </video>
@@ -537,9 +624,18 @@
 
 <!-- SECTION 2: WHY GOLD -->
 <section id="why-gold">
-  <div class="section-eyebrow">Warum Gold</div>
-  <h2 class="section-title">Drei Gründe, warum kluge Investoren jetzt handeln</h2>
-  <p class="section-sub">In einer Welt voller Unsicherheit ist Gold das einzige Asset, das seit Jahrtausenden seinen Wert behält — unabhängig von Regierungen, Banken oder digitalen Systemen.</p>
+  <div class="why-gold-header">
+    <div class="why-gold-text">
+      <div class="section-eyebrow">Warum Gold</div>
+      <h2 class="section-title">Drei Gründe, warum kluge Investoren jetzt handeln</h2>
+      <p class="section-sub">In einer Welt voller Unsicherheit ist Gold das einzige Asset, das seit Jahrtausenden seinen Wert behält — unabhängig von Regierungen, Banken oder digitalen Systemen.</p>
+    </div>
+    <div class="why-gold-video" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
+      <video autoplay muted loop playsinline>
+        <source src="videos/Shot1B.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
   <div class="cards-grid" id="cards-grid">
     <div class="card" data-card>
       <div class="card-number">01</div>
@@ -576,7 +672,7 @@
 
 <!-- SECTION 3: SPLIT SCREEN -->
 <section id="split-screen">
-  <div class="split-left">
+  <div class="split-left video-fade">
     <video id="smelt-video" muted playsinline preload="auto">
       <source src="videos/Shot3.mp4" type="video/mp4">
     </video>
@@ -613,7 +709,7 @@
 
 <!-- SECTION 4: GOLDBARREN VIDEO -->
 <section id="gold-bar-section">
-  <div class="gold-bar-sticky">
+  <div class="gold-bar-sticky video-fade video-fade-sides">
     <div class="gold-video-container">
       <video id="gold-video-a" muted playsinline preload="auto">
         <source src="videos/4A-haende-kommen.mp4" type="video/mp4">
@@ -696,7 +792,7 @@
 
 <!-- SECTION 6: FINALE -->
 <section id="finale">
-  <div class="finale-sticky">
+  <div class="finale-sticky video-fade video-fade-sides">
     <video id="vault-video" muted playsinline preload="auto">
       <source src="videos/Shot2A.mp4" type="video/mp4">
     </video>
@@ -710,8 +806,8 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">AURUM</div>
-  <div class="footer-copy">© 2025 Aurum Investment GmbH. Alle Rechte vorbehalten.</div>
+  <div class="footer-logo">Gold Invest Test</div>
+  <div class="footer-copy">© 2025 Gold Invest Test GmbH. Alle Rechte vorbehalten.</div>
   <div class="footer-links">
     <a href="#">Impressum</a>
     <a href="#">Datenschutz</a>
