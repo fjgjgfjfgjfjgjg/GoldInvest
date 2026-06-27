@@ -38,7 +38,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 24px 60px;
-    background: linear-gradient(to bottom, rgba(13,27,42,0.95), transparent);
+    background: transparent;
   }
   .nav-logo {
     font-family: 'Cormorant Garamond', serif;
@@ -78,6 +78,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
   .hero-overlay {
     position: absolute;
@@ -160,6 +161,21 @@
     position: relative;
   }
   .why-gold-video::before,
+  .wgv-fade-left, .wgv-fade-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .wgv-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--navy), transparent);
+  }
+  .wgv-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--navy), transparent);
+  }
   .why-gold-video::after {
     content: '';
     position: absolute;
@@ -171,6 +187,21 @@
     height: 80px;
     background: linear-gradient(to bottom, var(--navy), transparent);
   }
+  .wgv-fade-left, .wgv-fade-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .wgv-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--navy), transparent);
+  }
+  .wgv-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--navy), transparent);
+  }
   .why-gold-video::after {
     bottom: 0; left: 0; right: 0;
     height: 80px;
@@ -180,6 +211,21 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  .wgv-fade-left, .wgv-fade-right {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 80px;
+    z-index: 3;
+    pointer-events: none;
+  }
+  .wgv-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--navy), transparent);
+  }
+  .wgv-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--navy), transparent);
   }
   .why-gold-video::after {
     content: '';
@@ -271,40 +317,40 @@
     content: '';
     position: absolute;
     left: 0; right: 0;
-    height: 180px;
+    height: 280px;
     z-index: 2;
     pointer-events: none;
   }
   .video-fade::before {
     top: 0;
-    background: linear-gradient(to bottom, var(--navy), transparent);
+    background: linear-gradient(to bottom, var(--navy) 0%, rgba(13,27,42,0.8) 40%, transparent 100%);
   }
   .video-fade::after {
     bottom: 0;
-    background: linear-gradient(to top, var(--navy), transparent);
+    background: linear-gradient(to top, var(--navy) 0%, rgba(13,27,42,0.8) 40%, transparent 100%);
   }
   .video-fade-sides::before,
   .video-fade-sides::after {
     content: '';
     position: absolute;
     top: 0; bottom: 0;
-    width: 120px;
+    width: 80px;
     z-index: 2;
     pointer-events: none;
   }
   .video-fade-sides::before {
     left: 0;
-    background: linear-gradient(to right, var(--navy), transparent);
+    background: linear-gradient(to right, rgba(13,27,42,0.9), transparent);
   }
   .video-fade-sides::after {
     right: 0;
-    background: linear-gradient(to left, var(--navy), transparent);
+    background: linear-gradient(to left, rgba(13,27,42,0.9), transparent);
   }
 
   /* ─── SECTION 3: SPLIT SCREEN ─── */
   #split-screen {
     display: flex;
-    height: 500vh;
+    height: 280vh;
     position: relative;
   }
   .split-left {
@@ -378,6 +424,24 @@
     align-items: center;
     justify-content: center;
   }
+  .gold-bar-sticky::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 300px;
+    background: linear-gradient(to bottom, var(--navy), transparent);
+    z-index: 3;
+    pointer-events: none;
+  }
+  .gold-bar-sticky::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 300px;
+    background: linear-gradient(to top, var(--navy), transparent);
+    z-index: 3;
+    pointer-events: none;
+  }
   .gold-video-container {
     position: absolute;
     inset: 0;
@@ -401,49 +465,46 @@
   .info-point {
     position: absolute;
     opacity: 0;
-    transition: opacity 0.6s ease;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(8px);
   }
-  .info-point.visible { opacity: 1; }
-  .info-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--gold);
-    flex-shrink: 0;
-    box-shadow: 0 0 20px var(--gold), 0 0 40px rgba(201,168,76,0.4);
+  .info-point.visible { opacity: 1; transform: translateY(0); }
+  .info-bubble {
+    background: rgba(13,27,42,0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(201,168,76,0.35);
+    padding: 18px 24px;
+    min-width: 200px;
+    max-width: 240px;
   }
-  .info-line {
-    width: 80px;
-    height: 1px;
-    background: linear-gradient(to right, var(--gold), rgba(201,168,76,0.3));
-    flex-shrink: 0;
-  }
-  .info-text { max-width: 260px; }
-  .info-text strong {
+  .info-bubble strong {
     display: block;
     font-family: 'Cormorant Garamond', serif;
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 400;
     color: var(--gold-light);
     margin-bottom: 6px;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+    line-height: 1.1;
   }
-  .info-text span {
-    font-size: 15px;
+  .info-bubble span {
+    font-size: 13px;
     font-weight: 300;
-    color: var(--white);
+    color: rgba(245,240,232,0.8);
     line-height: 1.5;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.9);
   }
-  .info-point-1 { top: 28%; left: 6%; }
-  .info-point-2 { top: 18%; right: 6%; flex-direction: row-reverse; }
-  .info-point-2 .info-line { background: linear-gradient(to left, var(--gold), transparent); }
-  .info-point-3 { top: 58%; left: 6%; }
-  .info-point-4 { top: 68%; right: 6%; flex-direction: row-reverse; }
-  .info-point-4 .info-line { background: linear-gradient(to left, var(--gold), transparent); }
+  .info-bubble-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+    margin-bottom: 10px;
+  }
+  .info-point-1 { top: 14%; left: 5%; }
+  .info-point-2 { top: 14%; right: 5%; }
+  .info-point-3 { bottom: 14%; left: 5%; }
+  .info-point-4 { bottom: 14%; right: 5%; }
 
   /* ─── SECTION 5: TESTIMONIALS ─── */
   #testimonials {
@@ -509,6 +570,25 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+  }
+  .finale-sticky::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 300px;
+    background: linear-gradient(to bottom, var(--navy), transparent);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .finale-sticky::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 300px;
+    background: linear-gradient(to top, var(--navy), transparent);
+    z-index: 2;
+    pointer-events: none;
   }
   .finale-overlay {
     position: absolute;
@@ -606,7 +686,7 @@
 
 <!-- SECTION 1: HERO -->
 <section id="hero">
-  <div class="hero-sticky video-fade video-fade-sides">
+  <div class="hero-sticky video-fade">
     <video id="hero-video" muted playsinline preload="auto">
       <source src="videos/Shot1A.mp4" type="video/mp4">
     </video>
@@ -630,7 +710,9 @@
       <h2 class="section-title">Drei Gründe, warum kluge Investoren jetzt handeln</h2>
       <p class="section-sub">In einer Welt voller Unsicherheit ist Gold das einzige Asset, das seit Jahrtausenden seinen Wert behält — unabhängig von Regierungen, Banken oder digitalen Systemen.</p>
     </div>
-    <div class="why-gold-video" style="mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);">
+    <div class="why-gold-video">
+      <div class="wgv-fade-left"></div>
+      <div class="wgv-fade-right"></div>
       <video autoplay muted loop playsinline>
         <source src="videos/Shot1B.mp4" type="video/mp4">
       </video>
@@ -672,7 +754,7 @@
 
 <!-- SECTION 3: SPLIT SCREEN -->
 <section id="split-screen">
-  <div class="split-left video-fade">
+  <div class="split-left">
     <video id="smelt-video" muted playsinline preload="auto">
       <source src="videos/Shot3.mp4" type="video/mp4">
     </video>
@@ -709,7 +791,7 @@
 
 <!-- SECTION 4: GOLDBARREN VIDEO -->
 <section id="gold-bar-section">
-  <div class="gold-bar-sticky video-fade video-fade-sides">
+  <div class="gold-bar-sticky video-fade">
     <div class="gold-video-container">
       <video id="gold-video-a" muted playsinline preload="auto">
         <source src="videos/4A-haende-kommen.mp4" type="video/mp4">
@@ -720,35 +802,31 @@
     </div>
     <div class="gold-info-points">
       <div class="info-point info-point-1" id="info-1">
-        <div class="info-dot"></div>
-        <div class="info-line"></div>
-        <div class="info-text">
+        <div class="info-bubble">
+          <div class="info-bubble-dot"></div>
           <strong>999,9 Feinheit</strong>
-          <span>Höchster<br>Reinheitsstandard</span>
+          <span>Höchster Reinheitsstandard weltweit</span>
         </div>
       </div>
       <div class="info-point info-point-2" id="info-2">
-        <div class="info-dot"></div>
-        <div class="info-line"></div>
-        <div class="info-text">
+        <div class="info-bubble">
+          <div class="info-bubble-dot"></div>
           <strong>1 Kilogramm</strong>
-          <span>London Good<br>Delivery Standard</span>
+          <span>London Good Delivery Standard</span>
         </div>
       </div>
       <div class="info-point info-point-3" id="info-3">
-        <div class="info-dot"></div>
-        <div class="info-line"></div>
-        <div class="info-text">
+        <div class="info-bubble">
+          <div class="info-bubble-dot"></div>
           <strong>Zertifiziert</strong>
-          <span>Seriennummer &<br>Herkunftsnachweis</span>
+          <span>Seriennummer & Herkunftsnachweis</span>
         </div>
       </div>
       <div class="info-point info-point-4" id="info-4">
-        <div class="info-dot"></div>
-        <div class="info-line"></div>
-        <div class="info-text">
-          <strong>Versichert</strong>
-          <span>Vollkasko in<br>zertifizierten Tresoren</span>
+        <div class="info-bubble">
+          <div class="info-bubble-dot"></div>
+          <strong>Vollversichert</strong>
+          <span>Vollkasko in zertifizierten Tresoren</span>
         </div>
       </div>
     </div>
@@ -792,7 +870,7 @@
 
 <!-- SECTION 6: FINALE -->
 <section id="finale">
-  <div class="finale-sticky video-fade video-fade-sides">
+  <div class="finale-sticky video-fade">
     <video id="vault-video" muted playsinline preload="auto">
       <source src="videos/Shot2A.mp4" type="video/mp4">
     </video>
@@ -942,7 +1020,8 @@ window.addEventListener('scroll', () => {
 
   // Split text items
   const splitP = getScrollProgress(splitSection);
-  const itemIndex = Math.floor(splitP * splitItems.length);
+  const rawIndex = splitP * splitItems.length;
+  const itemIndex = Math.min(Math.floor(rawIndex), splitItems.length - 1);
   splitItems.forEach((item, i) => {
     if (i === itemIndex) item.classList.add('active');
     else item.classList.remove('active');
